@@ -38,7 +38,7 @@ const Products = () => {
   if (loading) return <h2>Loading products...</h2>
 
   return (
-    <Row xs={2} sm={3} lg={5}>
+    <Row xs={2} sm={3} lg={5} className="row g-0">
       {products}
     </Row>
   );
