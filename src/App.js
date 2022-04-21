@@ -1,13 +1,15 @@
-import Nav from "./components/nav/Nav";
-import Products from './components/products/Products';
+import Navigation from "./components/navigation/Navigation"
+import Products from './components/products/Products'
+import {AppProvider} from "./context/Context";
+
 
 function App() {
   return (
-    <div className="App">
-      <Nav/>
+    <AppProvider>
+      <Navigation/>
       <Products/>
-    </div>
-  );
+    </AppProvider>
+  )
 }
 
-export default App;
+export default App

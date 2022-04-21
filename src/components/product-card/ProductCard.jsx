@@ -1,19 +1,43 @@
-import React from "react"
+import React, {useContext, useState} from "react"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
+
 import classes from "./ProductCard.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {setItem, setShowCart} from "../../redux/cartSlice";
 
 const ProductCard = ({image, title, price}) => {
-  const titleStr = title.substring(0, 30)
+
+  const dispatch = useDispatch()
+  const [addedToCart, setAddedToCart] = useState(false)
+
+  const addToCart = () => {
+    if (addedToCart) {
+      dispatch(setShowCart(true))
+    } else {
+      setAddedToCart(true)
+      dispatch(setItem({title, price, image}))
+    }
+  }
+
   return (
     <Col>
       <Card className={classes.card}>
         <div className={classes.image_container}>
           <Card.Img className={classes.image} variant="top" src={image}/>
         </div>
-        <Card.Body>
-          <Card.Title className={classes.title}>{titleStr}</Card.Title>
-          <Card.Subtitle>${price}</Card.Subtitle>
+        <Card.Body className={classes.card_body}>
+          <Card.Text className={classes.title}>{title}</Card.Text>
+          <Card.Subtitle className={classes.card_subtitle}>${price}
+            <Button onClick={addToCart}>
+              {addedToCart
+                ?
+                <i className="fa-solid fa-check"/>
+                :
+                <i className="fa-solid fa-cart-arrow-down cart"/>}
+            </Button>
+          </Card.Subtitle>
         </Card.Body>
       </Card>
     </Col>
