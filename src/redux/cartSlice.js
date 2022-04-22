@@ -14,7 +14,6 @@ export const cartSlice = createSlice({
     },
     updateItem: (state, action) => {
       const {index, item, type} = action.payload
-      console.log("item index: "  + index)
       switch (type) {
         case "INCREASE" :
           state.cartItems[index] = {...item, count: item.count + 1}
@@ -25,6 +24,9 @@ export const cartSlice = createSlice({
           break
         case "DELETE" :
           state.cartItems = state.cartItems.filter((item, currentIndex) => currentIndex !== index)
+          break
+        default :
+          throw new Error("Error in update item!")
       }
     },
     setShowCart: (state, action) => {

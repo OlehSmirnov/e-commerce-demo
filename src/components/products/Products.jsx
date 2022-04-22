@@ -29,9 +29,10 @@ const Products = () => {
     }
   }, [])
 
-  const products = productsJSON.map((product, index) => {
+  const products = productsJSON.map(product => {
     return <ProductCard
-      key={index}
+      key={product.id}
+      id={product.id}
       image={product.image}
       price={product.price}
       description={product.description}

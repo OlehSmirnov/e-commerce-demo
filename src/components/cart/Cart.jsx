@@ -16,6 +16,13 @@ const Cart = () => {
   const handleClose = () => dispatch(setShowCart(false))
   const handleShow = () => dispatch(setShowCart(true))
   const handleChange = (item, index, type) => dispatch(updateItem({item, index, type}))
+  const countTotal = () => {
+    let total = 0
+    cartItems.forEach(item => {
+      total += item.count * item.price
+    })
+    return total.toFixed(2)
+  }
 
   return (
     <>
@@ -46,13 +53,16 @@ const Cart = () => {
                     <input disabled={true} value={item.count}/>
                     <Button onClick={() => handleChange(item, index, "INCREASE")}>+</Button>
                   </div>
-                  <span className={styles.price}>${item.price}</span>
+                  <span className={styles.price}>${(item.price * item.count).toFixed(2)}</span>
                 </Card.Title>
               </Card>
             )
           })}
         </Modal.Body>
         {cartItems.length > 0 && <Modal.Footer className={styles.modal_footer}>
+          <Card.Title>
+            Total: ${countTotal()}
+          </Card.Title>
           <Button variant="success" onClick={handleClose}>
             Checkout
           </Button>
