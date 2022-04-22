@@ -17,3 +17,5 @@
 * React
 * Redux, Redux toolkit
 * React-Bootstrap
+
+[Live version](https://oleh-fake-shop.netlify.app/)
