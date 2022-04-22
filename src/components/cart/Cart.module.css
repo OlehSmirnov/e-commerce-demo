@@ -15,6 +15,11 @@
     height: 100%;
 }
 
+.card_trash {
+    margin: 5px 5px 0 auto;
+    height: 40px;
+}
+
 .card_container {
     display: flex;
     height: 80%;
@@ -45,7 +50,7 @@ input {
 
 .price {
     margin-left: 5px;
-    width: 65px;
+    width: 100px;
 }
 
 .buttons_container button {

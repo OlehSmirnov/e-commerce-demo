@@ -14,13 +14,17 @@ export const cartSlice = createSlice({
     },
     updateItem: (state, action) => {
       const {index, item, type} = action.payload
+      console.log("item index: "  + index)
       switch (type) {
-        case ("INCREASE") :
+        case "INCREASE" :
           state.cartItems[index] = {...item, count: item.count + 1}
           break
-        case ("DECREASE") :
+        case "DECREASE" :
           if (state.cartItems[index].count !== 1)
             state.cartItems[index] = {...item, count: item.count - 1}
+          break
+        case "DELETE" :
+          state.cartItems = state.cartItems.filter((item, currentIndex) => currentIndex !== index)
       }
     },
     setShowCart: (state, action) => {
