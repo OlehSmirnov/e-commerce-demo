@@ -1,10 +1,10 @@
-import React, {useContext, useState} from "react"
+import React, {useState} from "react"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 
 import classes from "./ProductCard.module.css"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {setItem, setShowCart} from "../../redux/cartSlice";
 
 const ProductCard = ({image, title, price}) => {
@@ -17,7 +17,7 @@ const ProductCard = ({image, title, price}) => {
       dispatch(setShowCart(true))
     } else {
       setAddedToCart(true)
-      dispatch(setItem({title, price, image}))
+      dispatch(setItem({count: 1, title, price, image}))
     }
   }
 

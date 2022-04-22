@@ -1,0 +1,54 @@
+.card {
+    border-left: none;
+    border-right: none;
+    padding: 10px;
+    height: 170px;
+}
+
+.card_image_container {
+    margin-right: 10px;
+}
+
+.card_image {
+    object-fit: scale-down;
+    width: 100px;
+    height: 100%;
+}
+
+.card_container {
+    display: flex;
+    height: 80%;
+    overflow: hidden;
+}
+
+.card_footer {
+    display: flex;
+    align-items: center;
+}
+
+.card_footer input {
+    pointer-events: none;
+}
+
+.buttons_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+
+input {
+    width: 60px;
+    margin: 5px;
+    text-align: center;
+}
+
+.price {
+    margin-left: 5px;
+    width: 65px;
+}
+
+.buttons_container button {
+    width: 40px;
+    height: 40px;
+}
