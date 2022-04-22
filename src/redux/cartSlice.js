@@ -19,7 +19,8 @@ export const cartSlice = createSlice({
           state.cartItems[index] = {...item, count: item.count + 1}
           break
         case ("DECREASE") :
-          state.cartItems[index] = {...item, count: item.count - 1}
+          if (state.cartItems[index].count !== 1)
+            state.cartItems[index] = {...item, count: item.count - 1}
       }
     },
     setShowCart: (state, action) => {

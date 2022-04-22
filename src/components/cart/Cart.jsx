@@ -21,7 +21,6 @@ const Cart = () => {
     }
   }
 
-  console.log(cartItems)
   return (
     <>
       <Button variant="success" onClick={handleShow}>
@@ -29,7 +28,7 @@ const Cart = () => {
         <span> {cartItems.length > 0 ? cartItems.length : ""}</span>
       </Button>
       <Modal show={showCart} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className={styles.modal_header}>
           <Modal.Title>Your cart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -54,9 +53,9 @@ const Cart = () => {
             )
           })}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+        <Modal.Footer className={styles.modal_footer}>
+          <Button variant="success" onClick={handleClose}>
+            Checkout
           </Button>
         </Modal.Footer>
       </Modal>

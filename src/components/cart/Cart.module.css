@@ -52,3 +52,7 @@ input {
     width: 40px;
     height: 40px;
 }
+
+.modal_header, .modal_footer {
+    border: none;
+}
