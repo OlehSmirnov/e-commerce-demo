@@ -1,9 +1,7 @@
 import React from "react"
 import Navbar from "react-bootstrap/Navbar"
-import Button from "react-bootstrap/Button"
 
 import classes from "./Navigation.module.css"
-import Image from "react-bootstrap/Image";
 import Cart from "../cart/Cart";
 
 const Navigation = () => {
