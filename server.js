@@ -1,5 +1,5 @@
 require('dotenv').config()
-const stripe = require('stripe')(process.env.TEST_KEY);
+const stripe = require('stripe')(process.env.REACT_APP_TEST_KEY);
 const express = require('express')
 const app = express()
 
@@ -14,10 +14,10 @@ app.post('/create-checkout-session', async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: `${process.env.CLIENT_PORT}?success=true`,
-    cancel_url: `${process.env.CLIENT_PORT}?canceled=true`,
+    success_url: `${process.env.REACT_APP_CLIENT_PORT}?success=true`,
+    cancel_url: `${process.env.REACT_APP_CLIENT_PORT}?canceled=true`,
   });
-
+  console.log(process.env.REACT_APP_TEST_KEY)
   res.redirect(303, session.url);
 });
 
