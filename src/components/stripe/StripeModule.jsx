@@ -1,20 +1,37 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import Button from "react-bootstrap/Button";
 
-const ProductDisplay = () => {
+import {getCartItems} from "../../redux/cartSlice"
+import {useSelector} from "react-redux"
 
-  const formRef = useRef()
-  const handleSubmit = () => {
-    formRef.current.submit()
+const APP_PROD = "https://oleh-fake-shop.herokuapp.com/create-checkout-session"
+const APP_DEV = "http://localhost:5000/create-checkout-session"
+
+const ButtonProcess = () => {
+
+  const cartItems = useSelector(getCartItems)
+
+  const sendRequest = () => {
+    fetch(APP_PROD, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItems)
+    }).then(res => {
+      if (res.ok) return res.json()
+      return res.json().then(json => Promise.reject(json))
+    })
+      .then(({url}) => window.location = url)
+      .catch(err => console.log(err))
   }
 
-  return <section>
-    <form ref={formRef} action={"https://oleh-fake-shop.herokuapp.com/create-checkout-session"} method="POST">
-      <Button variant="success" onClick={handleSubmit}>
-        Checkout
-      </Button>
-    </form>
-  </section>
+  return (
+    <Button variant="success" onClick={sendRequest}>
+      Checkout
+    </Button>
+  )
+
 }
 
 const Message = ({message}) => (
@@ -36,14 +53,11 @@ export default function StripeModule() {
 
     if (query.get("canceled")) {
       setMessage(
-        "Order canceled -- continue to shop around and checkout when you're ready."
+        "Order canceled -- shop around and checkout when you're ready."
       );
     }
   }, [])
 
-  return message ? (
-    <Message message={message}/>
-  ) : (
-    <ProductDisplay/>
-  )
+  return <ButtonProcess/>
+
 }
