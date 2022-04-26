@@ -9,7 +9,7 @@ const ProductDisplay = () => {
   }
 
   return <section>
-    <form ref={formRef} action="http://localhost:4000/create-checkout-session" method="POST">
+    <form ref={formRef} action={`http://localhost:5000/create-checkout-session`} method="POST">
       <Button variant="success" onClick={handleSubmit}>
         Checkout
       </Button>
