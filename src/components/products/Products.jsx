@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Row from "react-bootstrap/Row"
+import { Link } from "react-router-dom";
 
 import ProductCard from '../product-card/ProductCard'
 import {useDispatch, useSelector} from "react-redux";
