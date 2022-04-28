@@ -14,7 +14,7 @@ const StripeSuccess = () => {
   return (
     <Card className="w-75 m-auto">
       <div className={styles.main}>
-        <Card.Header className={styles.header}>
+        <Card.Header className={`${styles.header} bg-success`}>
           <div className={styles.top_content}><i className="fa-solid fa-check"/></div>
         </Card.Header>
         <Card.Title className={styles.content}>

@@ -3,7 +3,7 @@
 }
 
 .header {
-    background: rgba(255, 102, 0, 1);
+    background-color: #0d6efd;
     padding: 20px;
 }
 
@@ -35,7 +35,7 @@
     color: #fff;
     border-radius: 30px;
     padding: 5px 10px;
-    background: rgba(255, 102, 0, 1);
+    background-color: #0d6efd;
     transition: all ease-in-out 0.2s;
 }
 

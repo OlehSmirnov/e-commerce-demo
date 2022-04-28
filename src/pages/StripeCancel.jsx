@@ -13,9 +13,9 @@ const StripeCancel = () => {
   }, [])
 
   return (
-    <Card className="w-75 m-auto">
+    <Card className="w-75 m-auto" >
         <div className={styles.main}>
-          <Card.Header className={styles.header}>
+          <Card.Header className={`${styles.header} bg-danger`}>
             <div className={styles.top_content}><i className="fa-solid fa-xmark"/></div>
           </Card.Header>
           <Card.Title className={styles.content}>
