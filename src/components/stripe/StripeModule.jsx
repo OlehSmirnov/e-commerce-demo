@@ -1,20 +1,19 @@
-import React, {useState} from "react"
+import React from "react"
 import Button from "react-bootstrap/Button"
+import {useDispatch, useSelector} from "react-redux"
 
-import {getCartItems} from "../../redux/cartSlice"
-import {useSelector} from "react-redux"
-import {Alert} from "react-bootstrap";
+import {getCartItems, setShowRedirect} from "../../redux/cartSlice"
 
 const APP_PROD = "https://oleh-fake-shop.herokuapp.com/create-checkout-session"
 const APP_DEV = "http://localhost:5000/create-checkout-session"
 
 export default function StripeModule() {
 
-  const [isClicked, setIsClicked] = useState(false)
   const cartItems = useSelector(getCartItems)
+  const dispatch = useDispatch()
 
   const sendRequest = () => {
-    setIsClicked(true)
+    dispatch(setShowRedirect(true))
     fetch(APP_PROD, {
       method: "POST",
       headers: {
@@ -31,9 +30,6 @@ export default function StripeModule() {
       <Button variant="success" onClick={sendRequest}>
         Checkout
       </Button>
-      {isClicked && <Alert variant="success" className="position-absolute top-0">
-        You are being redirected to Stripe checkout!
-      </Alert>}
     </>
   )
 

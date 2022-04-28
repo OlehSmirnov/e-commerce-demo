@@ -59,5 +59,8 @@ input {
 }
 
 .modal_header, .modal_footer {
+    background-color: #fff;
+    padding-right: 1rem !important;
+    margin-right: 0 !important;
     border: none;
 }

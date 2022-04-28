@@ -4,16 +4,18 @@ import Modal from "react-bootstrap/Modal"
 import Card from "react-bootstrap/Card"
 
 import {useDispatch, useSelector} from "react-redux"
-import {setShowCart, getShowCart, getCartItems} from "../../redux/cartSlice"
+import {setShowCart, getShowCart, getCartItems, getShowRedirect} from "../../redux/cartSlice"
 
 import styles from "./Cart.module.css"
 import CartItems from "./cart-items/CartItems"
 import StripeModule from "../stripe/StripeModule";
+import {Alert} from "react-bootstrap";
 
 const Cart = () => {
 
   const showCart = useSelector(getShowCart)
   const cartItems = useSelector(getCartItems)
+  const showRedirect = useSelector(getShowRedirect)
   const dispatch = useDispatch()
 
   const handleClose = () => dispatch(setShowCart(false))
@@ -34,8 +36,13 @@ const Cart = () => {
         <span> {cartItems.length > 0 && cartItems.length}</span>
       </Button>
       <Modal show={showCart} onHide={handleClose}>
-        <Modal.Header closeButton className={styles.modal_header}>
-          <Modal.Title>Your cart{cartItems.length === 0 && " is empty!"}</Modal.Title>
+        <Modal.Header closeButton className={`${styles.modal_header} sticky-top`}>
+          {showRedirect ?
+            <Alert variant="success">
+              You will be now redirected to Stripe checkout!
+            </Alert> :
+            <Modal.Title>Your cart{cartItems.length === 0 && " is empty!"}</Modal.Title>
+          }
         </Modal.Header>
         <CartItems/>
         {cartItems.length > 0 &&
