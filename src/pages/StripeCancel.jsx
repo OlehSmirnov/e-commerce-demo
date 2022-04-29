@@ -2,7 +2,7 @@ import React, {useEffect} from "react"
 import {Link, useNavigate} from "react-router-dom"
 import {Card} from "react-bootstrap"
 
-import styles from "./styles.module.css"
+import styles from "../styles/pages/pages.module.css"
 
 const StripeCancel = () => {
 

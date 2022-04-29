@@ -3,10 +3,10 @@ import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import Modal from "react-bootstrap/Modal"
 
-import {getCartItems, updateItem} from "../../../redux/cartSlice"
+import {getCartItems, updateItem} from "../../redux/cartSlice"
 import {useDispatch, useSelector} from "react-redux"
 
-import styles from "../Cart.module.css"
+import styles from "../../styles/cart/cart.module.css"
 
 const CartItems = () => {
 

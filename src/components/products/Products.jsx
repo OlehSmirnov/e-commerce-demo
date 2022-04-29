@@ -1,41 +1,23 @@
 import React, {useEffect, useState} from 'react'
 import Row from "react-bootstrap/Row"
+import {useSelector} from "react-redux"
 
 import ProductCard from '../product-card/ProductCard'
-import {useDispatch, useSelector} from "react-redux";
-import {getLoading, getSortBy, setLoading} from "../../redux/cartSlice";
-import styles from "./Products.module.css"
+import {getSortBy} from "../../redux/cartSlice"
+import sortItems from "../../utils/sortItems"
+import {Spinner} from "react-bootstrap";
 
 const Products = () => {
 
-  const [productsJSON, setProductsJSON] = useState([])
+  const [products, setProducts] = useState()
   const sortBy = useSelector(getSortBy)
-  const loading = useSelector(getLoading)
-  const dispatch = useDispatch()
 
-  const sortItems = (a, b) => {
-    if (sortBy === "cheapest") {
-      if (a.price > b.price) {
-        return 1
-      }
-      return -1
-    }
-    if (sortBy === "priciest") {
-      if (a.price > b.price) {
-        return -1
-      }
-      return 1
-    }
-  }
-
-  useEffect(() => {
+  useEffect( () => {
     const fetchData = async () => {
       try {
-        dispatch(setLoading(true))
         const res = await fetch('https://fakestoreapi.com/products')
-        const json = await res.json()
-        setProductsJSON(json)
-        dispatch(setLoading(false))
+        const products = await res.json()
+        setProducts(products)
       } catch (error) {
         console.error(error)
       }
@@ -43,22 +25,26 @@ const Products = () => {
     fetchData()
   }, [])
 
-  if (loading) return <h2 className={styles.loading}>Loading items...</h2>
+  if (!products) return <div className="d-flex justify-content-center">
+    <Spinner animation="grow"/>
+  </div>
 
   return (
-    <Row xs={2} sm={3} lg={5} className="row g-0">
-      {productsJSON.sort(sortItems).map(product => {
-        return <ProductCard
-          key={product.id}
-          id={product.id}
-          image={product.image}
-          price={product.price}
-          description={product.description}
-          title={product.title}
-        />
-      })}
-    </Row>
-  );
-};
+    <>
+      <Row xs={2} sm={3} lg={5} className="row g-0">
+        {products.sort(sortItems(sortBy)).map(product => {
+          return <ProductCard
+            key={product.id}
+            id={product.id}
+            image={product.image}
+            rating={product.rating}
+            price={product.price}
+            title={product.title}
+          />
+        })}
+      </Row>
+    </>
+  )
+}
 
-export default Products;
+export default Products

@@ -6,8 +6,7 @@ export const cartSlice = createSlice({
   initialState: {
     cartItems: [],
     showCart: false,
-    loading: false,
-    sortBy: "cheapest",
+    sortBy: "most_popular",
     showRedirect: false
   },
   reducers: {
@@ -34,9 +33,6 @@ export const cartSlice = createSlice({
     setShowCart: (state, action) => {
       state.showCart = action.payload
     },
-    setLoading: (state, action) => {
-      state.loading = action.payload
-    },
     setSortBy: (state, action) => {
       state.sortBy = action.payload
     },
@@ -50,7 +46,6 @@ export const {setItem, setShowCart, setLoading, setSortBy, updateItem, setShowRe
 
 export const getShowCart = (state) => state.cart.showCart
 export const getCartItems = (state) => state.cart.cartItems
-export const getLoading = (state) => state.cart.loading
 export const getSortBy = (state) => state.cart.sortBy
 export const getShowRedirect = (state) => state.cart.showRedirect
 

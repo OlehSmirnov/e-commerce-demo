@@ -1,44 +1,42 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
+import {Link} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux"
 
-import classes from "./ProductCard.module.css"
-import {useDispatch, useSelector} from "react-redux";
-import {getCartItems, setItem, setShowCart} from "../../redux/cartSlice";
+import styles from "../../styles/product-card/product_card.module.css"
+import {getCartItems, setItem, setShowCart} from "../../redux/cartSlice"
 
-const ProductCard = ({id, image, title, price}) => {
+const ProductCard = ({id, image, title, price, rating}) => {
 
   const dispatch = useDispatch()
-  const [addedToCart, setAddedToCart] = useState(false)
   const cartItems = useSelector(getCartItems)
 
   const addToCart = () => {
-    if (addedToCart) {
+    if (isItemAdded()) {
       dispatch(setShowCart(true))
     } else {
-      setAddedToCart(true)
       dispatch(setItem({count: 1, id, title, price, image}))
     }
   }
 
-  const isItemAdded = () => cartItems.filter(item => item.id === id).length !== 0
-
-  useEffect(() => {
-    setAddedToCart(isItemAdded())
-  }, [cartItems])
+  const isItemAdded = () => cartItems.filter(item => item.id == id).length !== 0
 
   return (
     <Col>
-      <Card className={classes.card}>
-        <div className={classes.image_container}>
-          <Card.Img className={classes.image} variant="top" src={image}/>
-        </div>
-        <Card.Body className={classes.card_body}>
-          <Card.Text className={classes.title}>{title}</Card.Text>
-          <Card.Subtitle className={classes.card_subtitle}>${price}
+      <Card className={styles.card}>
+        <Link to={`products/${id}`}>
+          <div className={styles.image_container}>
+            <Card.Img className={styles.image} variant="top" src={image}/>
+          </div>
+        </Link>
+        <Card.Body className={styles.card_body}>
+          <Card.Text className={styles.title}>{title}</Card.Text>
+          <span className={styles.span}><i className="fa-solid fa-star"/>{rating.rate} ({rating.count})</span>
+          <Card.Subtitle className={styles.card_subtitle}>${price}
             <Button onClick={addToCart}>
-              {addedToCart
+              {isItemAdded()
                 ?
                 <i className="fa-solid fa-check"/>
                 :
@@ -48,7 +46,7 @@ const ProductCard = ({id, image, title, price}) => {
         </Card.Body>
       </Card>
     </Col>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard

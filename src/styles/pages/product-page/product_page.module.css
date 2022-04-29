@@ -1,0 +1,28 @@
+.card {
+    width: 80%;
+    padding: 10px;
+    margin: 1rem auto;
+}
+
+.card img {
+    object-fit: scale-down;
+    max-height: 600px;
+}
+
+.card_body {
+    text-align: center;
+}
+
+.card_subtitle {
+    font-size: 3rem;
+    margin: 1rem;
+}
+
+.card_button {
+    width: 85%;
+    height: 60px;
+}
+
+.star {
+    color: #ffa900;
+}

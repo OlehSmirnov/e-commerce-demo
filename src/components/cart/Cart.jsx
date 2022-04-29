@@ -6,10 +6,10 @@ import Card from "react-bootstrap/Card"
 import {useDispatch, useSelector} from "react-redux"
 import {setShowCart, getShowCart, getCartItems, getShowRedirect} from "../../redux/cartSlice"
 
-import styles from "./Cart.module.css"
-import CartItems from "./cart-items/CartItems"
+import styles from "../../styles/cart/cart.module.css"
+import CartItems from "./CartItems"
 import StripeModule from "../stripe/StripeModule";
-import {Alert} from "react-bootstrap";
+import {Alert, Spinner} from "react-bootstrap";
 
 const Cart = () => {
 
@@ -40,6 +40,7 @@ const Cart = () => {
           {showRedirect ?
             <Alert variant="success">
               You will be now redirected to Stripe checkout!
+              <Spinner animation="border" className="spinner-border-sm m-1"/>
             </Alert> :
             <Modal.Title>Your cart{cartItems.length === 0 && " is empty!"}</Modal.Title>
           }
