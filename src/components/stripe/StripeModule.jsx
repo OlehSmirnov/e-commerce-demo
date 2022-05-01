@@ -3,9 +3,7 @@ import Button from "react-bootstrap/Button"
 import {useDispatch, useSelector} from "react-redux"
 
 import {getCartItems, setShowRedirect} from "../../redux/cartSlice"
-
-const APP_PROD = "https://oleh-fake-shop.herokuapp.com/create-checkout-session"
-const APP_DEV = "http://localhost:5000/create-checkout-session"
+import {APP_PROD, APP_DEV} from "../../constants"
 
 export default function StripeModule() {
 

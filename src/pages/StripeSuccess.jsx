@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
-import {Card} from "react-bootstrap";
-import {Link, useNavigate} from "react-router-dom";
-import styles from "../styles/pages/pages.module.css";
+import {Card} from "react-bootstrap"
+import {Link, useNavigate} from "react-router-dom"
+import styles from "../styles/pages/pages.module.css"
 
 const StripeSuccess = () => {
 
@@ -27,4 +27,4 @@ const StripeSuccess = () => {
   )
 }
 
-export default StripeSuccess;
+export default StripeSuccess

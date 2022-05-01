@@ -4,7 +4,8 @@ import {useDispatch} from "react-redux"
 
 import Cart from "../cart/Cart"
 import {Link} from "react-router-dom"
-import {setSortBy} from "../../redux/cartSlice";
+import {setSortBy} from "../../redux/cartSlice"
+import {CHEAPEST, MOST_POPULAR, PRICIEST, BEST_RATING} from "../../constants"
 
 const Navigation = () => {
 
@@ -21,11 +22,11 @@ const Navigation = () => {
           <Link to="/">Fake Shop</Link>
         </Navbar.Brand>
         <div className="ms-auto">
-          <select className="form-select-sm me-3" onChange={handleChange} defaultValue="most_popular">
-            <option value="most_popular">Most popular</option>
-            <option value="best_rating">Best rating</option>
-            <option value="cheapest">Cheapest</option>
-            <option value="priciest">Priciest</option>
+          <select className="form-select-sm me-3" onChange={handleChange} defaultValue={MOST_POPULAR}>
+            <option value={MOST_POPULAR}>Most popular</option>
+            <option value={BEST_RATING}>Best rating</option>
+            <option value={CHEAPEST}>Cheapest</option>
+            <option value={PRICIEST}>Priciest</option>
           </select>
           <Cart/>
         </div>

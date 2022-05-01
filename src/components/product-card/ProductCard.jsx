@@ -32,7 +32,9 @@ const ProductCard = ({id, image, title, price, rating}) => {
           </div>
         </Link>
         <Card.Body className={styles.card_body}>
-          <Card.Text className={styles.title}>{title}</Card.Text>
+          <Card.Text className={styles.title}>
+            <Link to={`products/${id}`}>{title}</Link>
+          </Card.Text>
           <span className={styles.span}><i className="fa-solid fa-star"/>{rating.rate} ({rating.count})</span>
           <Card.Subtitle className={styles.card_subtitle}>${price}
             <Button onClick={addToCart}>

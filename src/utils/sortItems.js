@@ -1,22 +1,24 @@
+import {BEST_RATING, CHEAPEST, MOST_POPULAR, PRICIEST} from "../constants"
+
 const sortItems = (sortBy) => {
   return (a, b) => {
     switch (sortBy) {
-      case "cheapest" :
+      case CHEAPEST :
         if (a.price > b.price) {
           return 1
         }
         return -1
-      case "priciest" :
+      case PRICIEST :
         if (a.price > b.price) {
           return -1
         }
         return 1
-      case "best_rating" :
+      case BEST_RATING :
         if (a.rating.rate > b.rating.rate) {
           return -1
         }
         return 1
-      case "most_popular" :
+      case MOST_POPULAR :
         if (a.rating.count > b.rating.count) {
           return -1
         }

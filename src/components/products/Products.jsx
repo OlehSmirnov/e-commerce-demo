@@ -5,12 +5,13 @@ import {useSelector} from "react-redux"
 import ProductCard from '../product-card/ProductCard'
 import {getSortBy} from "../../redux/cartSlice"
 import sortItems from "../../utils/sortItems"
-import {Spinner} from "react-bootstrap";
+import {Spinner} from "react-bootstrap"
 
 const Products = () => {
 
   const [products, setProducts] = useState()
   const sortBy = useSelector(getSortBy)
+  console.log("Sort by: " + sortBy)
 
   useEffect( () => {
     const fetchData = async () => {

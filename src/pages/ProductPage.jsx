@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react"
 import {Card, Spinner} from "react-bootstrap"
 import {useParams} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux"
+import Button from "react-bootstrap/Button"
 
 import styles from "../styles/pages/product-page/product_page.module.css"
-import Button from "react-bootstrap/Button";
-import {getCartItems, setItem, setShowCart} from "../redux/cartSlice";
-import {useDispatch, useSelector} from "react-redux";
+import {getCartItems, setItem, setShowCart} from "../redux/cartSlice"
+
 
 const ProductPage = () => {
 

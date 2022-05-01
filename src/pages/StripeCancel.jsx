@@ -28,4 +28,4 @@ const StripeCancel = () => {
   )
 }
 
-export default StripeCancel;
+export default StripeCancel

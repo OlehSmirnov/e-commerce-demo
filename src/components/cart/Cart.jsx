@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Button from "react-bootstrap/Button"
 import Modal from "react-bootstrap/Modal"
 import Card from "react-bootstrap/Card"
@@ -8,8 +8,9 @@ import {setShowCart, getShowCart, getCartItems, getShowRedirect} from "../../red
 
 import styles from "../../styles/cart/cart.module.css"
 import CartItems from "./CartItems"
-import StripeModule from "../stripe/StripeModule";
-import {Alert, Spinner} from "react-bootstrap";
+import StripeModule from "../stripe/StripeModule"
+import {Alert, Spinner} from "react-bootstrap"
+import {CART} from "../../constants"
 
 const Cart = () => {
 
@@ -28,6 +29,13 @@ const Cart = () => {
     })
     return total.toFixed(2)
   }
+
+  useEffect(() => {
+    const updateLocalStorage = () => {
+      localStorage.setItem(CART, JSON.stringify(cartItems))
+    }
+    updateLocalStorage()
+  }, [cartItems])
 
   return (
     <>
@@ -59,4 +67,4 @@ const Cart = () => {
   )
 }
 
-export default Cart;
+export default Cart
