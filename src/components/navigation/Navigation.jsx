@@ -19,7 +19,7 @@ const Navigation = () => {
     <>
       <Navbar className="p-1 sticky-top" bg="light">
         <Navbar.Brand>
-          <Link to="/">Fake Shop</Link>
+          <Link to="/">Oleh's shop</Link>
         </Navbar.Brand>
         <div className="ms-auto">
           <select className="form-select-sm me-3" onChange={handleChange} defaultValue={MOST_POPULAR}>
