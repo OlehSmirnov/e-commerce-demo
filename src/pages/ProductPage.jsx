@@ -12,6 +12,7 @@ const ProductPage = () => {
 
   const id = useParams().id
   const [product, setProduct] = useState()
+  const [errorFetching, setErrorFetching] = useState(false)
   const dispatch = useDispatch()
   const cartItems = useSelector(getCartItems)
 
@@ -32,11 +33,16 @@ const ProductPage = () => {
         const data = await res.json()
         setProduct(data)
       } catch (error) {
-        console.error(error)
+        setErrorFetching(true)
+        console.error("Error in ProductPage: " + error)
       }
     }
     fetchData()
   }, [])
+
+  if (errorFetching) return <div className="d-flex justify-content-center">
+    <h2>There was an error connecting to server, please try again later!</h2>
+  </div>
 
   if (!product) return <div className="d-flex justify-content-center">
     <Spinner animation="grow"/>

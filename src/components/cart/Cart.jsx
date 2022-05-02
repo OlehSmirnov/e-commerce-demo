@@ -39,7 +39,7 @@ const Cart = () => {
 
   return (
     <>
-      <Button variant="success" onClick={handleShow}>
+      <Button className="ms-auto" variant="success" onClick={handleShow}>
         <i className="fa-solid fa-cart-shopping cart"></i>
         <span> {cartItems.length > 0 && cartItems.length}</span>
       </Button>

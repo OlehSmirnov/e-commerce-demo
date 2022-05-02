@@ -1,10 +1,10 @@
 import React from "react"
 import Navigation from "./components/navigation/Navigation"
-import Products from "./components/products/Products"
+import Products from "./pages/Products"
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 
-import StripeCancel from "./pages/StripeCancel"
-import StripeSuccess from "./pages/StripeSuccess"
+import StripeCancel from "./pages/stripe/StripeCancel"
+import StripeSuccess from "./pages/stripe/StripeSuccess"
 import NotFound from "./pages/NotFound"
 import ProductPage from "./pages/ProductPage"
 

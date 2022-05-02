@@ -7,6 +7,10 @@ body {
   background-color: #f8f9fa;
 }
 
+button:focus {
+  box-shadow: none !important;
+}
+
 a, a:hover {
   text-decoration: none;
   color: inherit;

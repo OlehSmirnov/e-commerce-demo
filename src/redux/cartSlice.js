@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import {CART, MOST_POPULAR} from "../constants"
+import {CART} from "../constants"
 
 export const cartSlice = createSlice({
 
@@ -7,7 +7,6 @@ export const cartSlice = createSlice({
   initialState: {
     cartItems: JSON.parse(localStorage.getItem(CART)) || [],
     showCart: false,
-    sortBy: MOST_POPULAR,
     showRedirect: false
   },
   reducers: {
@@ -37,17 +36,19 @@ export const cartSlice = createSlice({
     setSortBy: (state, action) => {
       state.sortBy = action.payload
     },
+    setFilterBy: (state, action) => {
+      state.filterBy = action.payload
+    },
     setShowRedirect: (state, action) => {
       state.showRedirect = action.payload
     }
   }
 })
 
-export const {setItem, setShowCart, setSortBy, updateItem, setShowRedirect} = cartSlice.actions
+export const {setItem, setShowCart, updateItem, setShowRedirect} = cartSlice.actions
 
 export const getShowCart = (state) => state.cart.showCart
 export const getCartItems = (state) => state.cart.cartItems
-export const getSortBy = (state) => state.cart.sortBy
 export const getShowRedirect = (state) => state.cart.showRedirect
 
 export default cartSlice.reducer
