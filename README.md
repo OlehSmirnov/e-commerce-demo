@@ -14,14 +14,14 @@
 **Tech stack**
 
 Front-end:
-* React
+* React + JavaScript
 * Redux, Redux toolkit
 * React-Bootstrap
 * React Router
 * CSS Modules
 
 Back-end:
-* Express (handling Stripe payments)
+* Node.js + Express (only for handling Stripe payments)
 
 **Note:** as of now the back-end server is deployed to Heroku, so you can't see the files for it.
 If you absolutely need to see them feel free to contact me.
