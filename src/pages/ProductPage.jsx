@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Button from "react-bootstrap/Button"
 
 import styles from "../styles/pages/product-page/product_page.module.css"
-import {getCartItems, setItem, setShowCart} from "../redux/cartSlice"
+import {getCartItems, setItem, setShowCart} from "../redux/appSlice"
 
 
 const ProductPage = () => {

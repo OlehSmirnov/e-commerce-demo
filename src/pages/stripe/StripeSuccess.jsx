@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React from "react"
 import {Card} from "react-bootstrap"
 import {Link, useNavigate} from "react-router-dom"
 import styles from "../../styles/pages/pages.module.css"
@@ -7,9 +7,7 @@ const StripeSuccess = () => {
 
   const navigate = useNavigate()
 
-  useEffect(() => {
-    setTimeout(() => navigate('/'), 5000)
-  }, [])
+  setTimeout(() => navigate("/"), 3000)
 
   return (
     <Card className="w-75 m-auto">

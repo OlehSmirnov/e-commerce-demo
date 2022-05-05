@@ -2,7 +2,7 @@ import React from "react"
 import Button from "react-bootstrap/Button"
 import {useDispatch, useSelector} from "react-redux"
 
-import {getCartItems, setShowRedirect} from "../../redux/cartSlice"
+import {getCartItems, setShowRedirect} from "../../redux/appSlice"
 import {APP_PROD, APP_DEV} from "../../constants"
 
 export default function StripeModule() {

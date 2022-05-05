@@ -6,7 +6,7 @@ import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
 import styles from "../../styles/product-card/product_card.module.css"
-import {getCartItems, setItem, setShowCart} from "../../redux/cartSlice"
+import {getCartItems, setItem, setShowCart} from "../../redux/appSlice"
 
 const ProductCard = ({id, image, title, price, rating}) => {
 

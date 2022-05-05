@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit"
 import {CART} from "../constants"
 
-export const cartSlice = createSlice({
+export const appSlice = createSlice({
 
-  name: "cart",
+  name: "app",
   initialState: {
     cartItems: JSON.parse(localStorage.getItem(CART)) || [],
     showCart: false,
@@ -45,10 +45,10 @@ export const cartSlice = createSlice({
   }
 })
 
-export const {setItem, setShowCart, updateItem, setShowRedirect} = cartSlice.actions
+export const {setItem, setShowCart, updateItem, setShowRedirect} = appSlice.actions
 
-export const getShowCart = (state) => state.cart.showCart
-export const getCartItems = (state) => state.cart.cartItems
-export const getShowRedirect = (state) => state.cart.showRedirect
+export const getShowCart = (state) => state.app.showCart
+export const getCartItems = (state) => state.app.cartItems
+export const getShowRedirect = (state) => state.app.showRedirect
 
-export default cartSlice.reducer
+export default appSlice.reducer

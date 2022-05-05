@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal"
 import Card from "react-bootstrap/Card"
 
 import {useDispatch, useSelector} from "react-redux"
-import {setShowCart, getShowCart, getCartItems, getShowRedirect} from "../../redux/cartSlice"
+import {setShowCart, getShowCart, getCartItems, getShowRedirect} from "../../redux/appSlice"
 
 import styles from "../../styles/cart/cart.module.css"
 import CartItems from "./CartItems"
@@ -39,7 +39,7 @@ const Cart = () => {
 
   return (
     <>
-      <Button className="ms-auto" variant="success" onClick={handleShow}>
+      <Button className="ms-2" variant="success" onClick={handleShow}>
         <i className="fa-solid fa-cart-shopping cart"></i>
         <span> {cartItems.length > 0 && cartItems.length}</span>
       </Button>
