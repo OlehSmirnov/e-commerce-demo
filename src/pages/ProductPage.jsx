@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Button from "react-bootstrap/Button"
 
 import styles from "../styles/pages/product-page/product_page.module.css"
-import {getCartItems, setItem, setShowCart} from "../redux/appSlice"
+import {getCartItems, addCartItem, setShowCart} from "../redux/appSlice"
 
 
 const ProductPage = () => {
@@ -20,7 +20,7 @@ const ProductPage = () => {
     if (isItemAdded()) {
       dispatch(setShowCart(true))
     } else {
-      dispatch(setItem({count: 1, id, title: product.title, price: product.price, image: product.image}))
+      dispatch(addCartItem({count: 1, id, title: product.title, price: product.price, image: product.image}))
     }
   }
 

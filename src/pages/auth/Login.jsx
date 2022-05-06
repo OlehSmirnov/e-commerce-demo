@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Button, Card, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap"
 import {Link, useNavigate} from "react-router-dom"
-import {loginUser} from "../../firebase/firebase"
+import auth, {loginUser} from "../../firebase/firebase"
 
 const Login = () => {
 
@@ -18,6 +18,7 @@ const Login = () => {
   }
 
   const handleChange = (e) => {
+
     setUserData(prevState => ({
       ...prevState,
       [e.target.type]: e.target.value

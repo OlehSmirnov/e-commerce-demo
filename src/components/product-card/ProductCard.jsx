@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
@@ -6,19 +6,24 @@ import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
 import styles from "../../styles/product-card/product_card.module.css"
-import {getCartItems, setItem, setShowCart} from "../../redux/appSlice"
+import {getCartItems, addCartItem, setShowCart} from "../../redux/appSlice"
 
 const ProductCard = ({id, image, title, price, rating}) => {
 
   const dispatch = useDispatch()
   const cartItems = useSelector(getCartItems)
+  const [isFavorite, setIsFavorite] = useState(false)
 
   const addToCart = () => {
     if (isItemAdded()) {
       dispatch(setShowCart(true))
     } else {
-      dispatch(setItem({count: 1, id, title, price, image}))
+      dispatch(addCartItem({count: 1, id, title, price, image}))
     }
+  }
+
+  const handleFavorite = () => {
+    setIsFavorite(prevState => !prevState)
   }
 
   const isItemAdded = () => cartItems.filter(item => item.id == id).length !== 0
@@ -35,6 +40,15 @@ const ProductCard = ({id, image, title, price, rating}) => {
           <Card.Text className={styles.title}>
             <Link to={`products/${id}`}>{title}</Link>
           </Card.Text>
+          <Button className={styles.card_favorite} onClick={handleFavorite}>
+            {isFavorite
+              ?
+              <i className="fa-solid fa-heart"/>
+              :
+              <i className="fa-regular fa-heart"/>
+            }
+
+          </Button>
           <span className={styles.span}><i className="fa-solid fa-star"/>{rating.rate} ({rating.count})</span>
           <Card.Subtitle className={styles.card_subtitle}>${price}
             <Button onClick={addToCart}>

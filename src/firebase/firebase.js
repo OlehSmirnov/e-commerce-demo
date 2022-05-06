@@ -1,15 +1,23 @@
 import {initializeApp} from "firebase/app"
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth"
+import {getDatabase, ref, set, get} from "firebase/database"
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "firebase/auth"
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID
 })
 
+const database = getDatabase()
 const auth = getAuth(app)
 
 const signUpUser = (userData) => {
@@ -35,7 +43,7 @@ const loginUser = (userData) => {
       const message = error.message
       const formattedMessage =
         message.substring(message.indexOf("/") + 1, message.length - 2)
-        .replaceAll("-", " ")
+          .replaceAll("-", " ")
       return "Error: " + formattedMessage
     })
 }
@@ -44,5 +52,12 @@ const signOutUser = () => {
   return signOut(auth)
 }
 
+const setUserFavorites = (favorites) => {
+  set(ref(database, "users/" + auth.currentUser.uid), {
+    email: auth.currentUser.email,
+    favorites
+  })
+}
+
 export default auth
-export {loginUser, signUpUser, signOutUser}
+export {loginUser, signUpUser, signOutUser, setUserFavorites, database}

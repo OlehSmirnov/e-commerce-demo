@@ -1,17 +1,9 @@
-import React, {useEffect, useState} from 'react'
-import Row from "react-bootstrap/Row"
-
-import ProductCard from '../components/product-card/ProductCard'
+import React, {useEffect, useState} from "react"
+import ProductCard from "../components/product-card/ProductCard"
 import sortItems from "../utils/sortItems"
-import {Navbar, Spinner, Button} from "react-bootstrap"
-import {
-  FILTER_ALL,
-  SORT_BEST_RATING,
-  SORT_CHEAPEST,
-  SORT_MOST_POPULAR,
-  SORT_PRICIEST,
-  SMALL_SCREEN_MAX_WIDTH
-} from "../constants"
+import {Spinner, Row} from "react-bootstrap"
+import {FILTER_ALL, SORT_MOST_POPULAR} from "../constants"
+import TopPanel from "../components/top-panel/TopPanel"
 
 const Products = () => {
 
@@ -21,12 +13,11 @@ const Products = () => {
   const [categories, setCategories] = useState([])
   const [activeGridButtonIndex, setActiveGridButtonIndex] = useState(0)
   const [errorFetching, setErrorFetching] = useState(false)
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://fakestoreapi.com/products')
+        const res = await fetch("https://fakestoreapi.com/products")
         const products = await res.json()
         setProducts(products)
         fillCategories(products)
@@ -36,12 +27,6 @@ const Products = () => {
       }
     }
     fetchData()
-  }, [])
-
-  useEffect(() => {
-    const listener = () => setWindowWidth(window.innerWidth)
-    window.addEventListener("resize", listener)
-    return () => window.removeEventListener("resize", listener)
   }, [])
 
   const fillCategories = (products) => {
@@ -54,14 +39,6 @@ const Products = () => {
     setCategories(arr)
   }
 
-  const handleSort = (e) => {
-    setSortBy(e.target.value)
-  }
-
-  const handleFilter = (e) => {
-    setFilterBy(e.target.value)
-  }
-
   if (errorFetching) return <div className="d-flex justify-content-center">
     <h2>There was an error connecting to server, please try again later!</h2>
   </div>
@@ -72,40 +49,12 @@ const Products = () => {
 
   return (
     <>
-      <Navbar className="sticky-top d-flex p-1 gap-3 justify-content-end"
-              style={{top: "48px", backgroundColor: "#fcfcfc"}}>
-        <select className="form-select-sm" onChange={handleFilter} defaultValue={FILTER_ALL} title="Filter by">
-          <option value={FILTER_ALL}>{FILTER_ALL}</option>
-          {categories.map(category => {
-            return <option key={category} value={category}>
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </option>
-          })}
-        </select>
-        <select className="form-select-sm" onChange={handleSort} defaultValue={SORT_MOST_POPULAR} title="Sort by">
-          <option value={SORT_MOST_POPULAR}>{SORT_MOST_POPULAR}</option>
-          <option value={SORT_BEST_RATING}>{SORT_BEST_RATING}</option>
-          <option value={SORT_CHEAPEST}>{SORT_CHEAPEST}</option>
-          <option value={SORT_PRICIEST}>{SORT_PRICIEST}</option>
-        </select>
-        {windowWidth > SMALL_SCREEN_MAX_WIDTH && <div>
-          <Button
-            className="border"
-            onClick={() => setActiveGridButtonIndex(0)}
-            variant={activeGridButtonIndex === 0 ? "primary" : ""}
-            style={{border: "1px solid #f8f8f8"}}>
-            <i className="bi-grid-fill"
-               style={{color: activeGridButtonIndex === 0 ? "white" : "black"}}/>
-          </Button>
-          <Button
-            className="border"
-            onClick={() => setActiveGridButtonIndex(1)}
-            variant={activeGridButtonIndex === 1 ? "primary" : ""}>
-            <i className="bi bi-grid-3x3-gap-fill"
-               style={{color: activeGridButtonIndex === 1 ? "white" : "black"}}/>
-          </Button>
-        </div>}
-      </Navbar>
+      <TopPanel categories={categories}
+                activeGridButtonIndex={activeGridButtonIndex}
+                setActiveGridButtonIndex={(index) => setActiveGridButtonIndex(index)}
+                setSortBy={(value) => setSortBy(value)}
+                setFilterBy={(value) => setFilterBy(value)}
+      />
       <Row xs={2}
            sm={activeGridButtonIndex === 0 ? 3 : 4}
            lg={activeGridButtonIndex === 0 ? 5 : 6}

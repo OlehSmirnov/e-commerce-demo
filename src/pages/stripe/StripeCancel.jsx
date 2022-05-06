@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {Link, useNavigate} from "react-router-dom"
 import {Card} from "react-bootstrap"
 
@@ -8,7 +8,9 @@ const StripeCancel = () => {
 
   const navigate = useNavigate()
 
-  setTimeout(() => navigate("/"), 3000)
+  useEffect(() => {
+    setTimeout(() => navigate("/"), 3000)
+  }, [])
 
   return (
     <Card className="w-75 m-auto" >

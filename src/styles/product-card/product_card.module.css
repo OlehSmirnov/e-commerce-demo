@@ -28,6 +28,21 @@
     justify-content: space-between;
 }
 
+.card_favorite {
+    position: absolute;
+    background-color: white;
+    font-size: 18px;
+    border: none;
+    color: red;
+    top: 10px;
+    right: 25px;
+}
+
+.card_favorite:hover, .card_favorite:focus {
+    background-color: #cccccc;
+    color: red;
+}
+
 .title {
     height: 100%;
     overflow: hidden;

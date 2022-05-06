@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button"
 import {useDispatch, useSelector} from "react-redux"
 
 import {getCartItems, setShowRedirect} from "../../redux/appSlice"
-import {APP_PROD, APP_DEV} from "../../constants"
 
 export default function StripeModule() {
 
@@ -12,7 +11,7 @@ export default function StripeModule() {
 
   const sendRequest = () => {
     dispatch(setShowRedirect(true))
-    fetch(APP_PROD, {
+    fetch(process.env.REACT_APP_BACKEND_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import {CART} from "../constants"
+import {CART, FAVORITES} from "../constants"
 
 export const appSlice = createSlice({
 
@@ -10,7 +10,7 @@ export const appSlice = createSlice({
     showRedirect: false
   },
   reducers: {
-    setItem: (state, action) => {
+    addCartItem: (state, action) => {
       state.cartItems = [...state.cartItems, action.payload]
     },
     updateItem: (state, action) => {
@@ -45,7 +45,7 @@ export const appSlice = createSlice({
   }
 })
 
-export const {setItem, setShowCart, updateItem, setShowRedirect} = appSlice.actions
+export const {addCartItem, setShowCart, updateItem, setShowRedirect} = appSlice.actions
 
 export const getShowCart = (state) => state.app.showCart
 export const getCartItems = (state) => state.app.cartItems
