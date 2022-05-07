@@ -1,7 +1,8 @@
 import React, {useState} from "react"
 import {Button, Card, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap"
 import {Link, useNavigate} from "react-router-dom"
-import auth, {setUserFavorites, signUpUser} from "../../firebase/firebase"
+import {signUpUser} from "../../firebase/firebase"
+
 
 const SignUp = () => {
 
@@ -13,11 +14,8 @@ const SignUp = () => {
     e.preventDefault()
     const res = await signUpUser(userData)
     setTextInfo(res.toString())
-    if (!res.toString().includes("Error")) {
-
-      setUserFavorites (["mom", "dad"])
+    if (!res.toString().includes("Error"))
       navigate("/")
-    }
   }
 
   const handleChange = (e) => {

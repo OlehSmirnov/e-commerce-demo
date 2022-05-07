@@ -18,13 +18,6 @@ const Favorites = () => {
   const [activeGridButtonIndex, setActiveGridButtonIndex] = useState(0)
 
 
-  const starCountRef = ref(  database
-    , 'users/' + auth.currentUser.uid + '/favorites');
-  onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val();
-    console.log(data)
-  })
-
   return (
     <>
       <TopPanel categories={categories}

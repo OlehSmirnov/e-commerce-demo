@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app"
-import {getDatabase, ref, set, get} from "firebase/database"
+import {getDatabase, ref, set, push, child, update, remove} from "firebase/database"
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -52,12 +52,17 @@ const signOutUser = () => {
   return signOut(auth)
 }
 
-const setUserFavorites = (favorites) => {
-  set(ref(database, "users/" + auth.currentUser.uid), {
+const updateFavorites = (favorites) => {
+
+  const data = {
     email: auth.currentUser.email,
     favorites
-  })
+  }
+  const updates = {}
+  updates["users/" + auth.currentUser.uid] = data
+
+  return update(ref(database), updates)
 }
 
 export default auth
-export {loginUser, signUpUser, signOutUser, setUserFavorites, database}
+export {loginUser, signUpUser, signOutUser, updateFavorites, database}

@@ -69,6 +69,7 @@ const Products = () => {
               rating={product.rating}
               price={product.price}
               title={product.title}
+              showFavorite={true}
             />
           })}
       </Row>
