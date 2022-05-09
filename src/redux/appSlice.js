@@ -6,7 +6,7 @@ export const appSlice = createSlice({
   name: "app",
   initialState: {
     cartItems: JSON.parse(localStorage.getItem(CART)) || [],
-    favorites: [],
+    favorites: null,
     showCart: false,
     showRedirect: false
   },
