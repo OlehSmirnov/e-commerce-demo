@@ -1,12 +1,11 @@
 import React, {useState} from "react"
 import {Card, Button, Spinner} from "react-bootstrap"
-import auth, {database, setUserFavorites} from "../firebase/firebase"
+import auth from "../firebase/firebase"
 import {signOutUser} from "../firebase/firebase"
 import {onAuthStateChanged} from "firebase/auth"
 import {useNavigate} from "react-router-dom"
 
 import Favorites from "../components/favorites/Favorites"
-import {onValue, ref} from "firebase/database";
 
 const UserCabinet = () => {
 
@@ -15,9 +14,8 @@ const UserCabinet = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
 
   onAuthStateChanged(auth, (user) => {
-    if (user) {
+    if (user)
       setIsAuthenticated(true)
-    }
     else
       setIsAuthenticated(false)
   })
@@ -37,8 +35,8 @@ const UserCabinet = () => {
     <Card>
       <Card.Body>
         <h2>Hello {auth.currentUser.email}!</h2>
-        {/*<Favorites/>*/}
-        <Button variant="danger" onClick={handleLogOut}>Log out</Button>
+        <Favorites/>
+        <Button variant="danger" className="mt-2" onClick={handleLogOut}>Log out</Button>
       </Card.Body>
     </Card>
   )

@@ -7,7 +7,6 @@ import Button from "react-bootstrap/Button"
 import styles from "../styles/pages/product-page/product_page.module.css"
 import {getCartItems, addCartItem, setShowCart} from "../redux/appSlice"
 
-
 const ProductPage = () => {
 
   const id = useParams().id
@@ -24,7 +23,10 @@ const ProductPage = () => {
     }
   }
 
-  const isItemAdded = () => cartItems.filter(item => item.id == id).length !== 0
+  const isItemAdded = () => cartItems.filter(item => {
+    console.log(item.id)
+    return item.id == id
+  }).length !== 0
 
   useEffect(() => {
     const fetchData = async () => {

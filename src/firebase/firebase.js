@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app"
-import {getDatabase, ref, set, push, child, update, remove} from "firebase/database"
+import {getDatabase, ref, update} from "firebase/database"
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -53,14 +53,12 @@ const signOutUser = () => {
 }
 
 const updateFavorites = (favorites) => {
-
   const data = {
     email: auth.currentUser.email,
     favorites
   }
   const updates = {}
   updates["users/" + auth.currentUser.uid] = data
-
   return update(ref(database), updates)
 }
 

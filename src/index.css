@@ -15,3 +15,9 @@ a, a:hover {
   text-decoration: none;
   color: inherit;
 }
+
+.button_nav {
+  width: 55px;
+  height: 40px;
+  padding: 0;
+}

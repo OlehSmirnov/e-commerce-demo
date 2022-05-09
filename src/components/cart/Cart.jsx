@@ -39,10 +39,10 @@ const Cart = () => {
 
   return (
     <>
-      <Button className="ms-2" variant="success" onClick={handleShow}>
+      {cartItems.length > 0 && <Button className="ms-2 button_nav" variant="success" onClick={handleShow}>
         <i className="fa-solid fa-cart-shopping cart"></i>
-        <span> {cartItems.length > 0 && cartItems.length}</span>
-      </Button>
+        <span> {cartItems.length}</span>
+      </Button>}
       <Modal show={showCart} onHide={handleClose}>
         <Modal.Header closeButton className={`${styles.modal_header} sticky-top`}>
           {showRedirect ?
