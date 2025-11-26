@@ -3,6 +3,14 @@ import cors from "cors";
 import crypto from "crypto";
 
 const app = express();
+<<<<<<< HEAD
+=======
+app.use(cors({
+  origin: ["http://localhost:3000", "https://e-commerce-demo-fivi.onrender.com"],
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true
+}));
+>>>>>>> 9a47eae187ff89d7ba8eb27255f2eb9750546646
 app.use(express.json());
 
 // =================== CORS ===================
