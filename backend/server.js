@@ -7,7 +7,11 @@ import paypal from "@paypal/checkout-server-sdk";
 
 dotenv.config();
 const app = express();
-app.use(cors({ origin: "*" }));
+app.use(cors({
+  origin: ["http://localhost:3000", "https://e-commerce-demo-fivi.onrender.com"],
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true
+}));
 app.use(express.json());
 
 // ---------- STRIPE ----------
