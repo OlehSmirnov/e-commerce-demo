@@ -64,3 +64,71 @@ input {
     margin-right: 0 !important;
     border: none;
 }
+
+.buttonContainer {
+  display: flex;
+  gap: 16px;
+}
+
+/* Загальні стилі кнопки */
+.btnStripe,
+.btnPaypal {
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  position: relative;
+}
+
+.btnStripe {
+  background-color: #6772e5;
+}
+
+.btnPaypal {
+  background-color: #003087;
+}
+
+.btnStripe:hover,
+.btnPaypal:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btnStripe:active,
+.btnPaypal:active {
+  transform: scale(0.95);
+}
+
+.btnStripe:disabled,
+.btnPaypal:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Loader (анімація завантаження) */
+.loader {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btnStripe,
+.btnPaypal {
+  min-width: 180px; 
+}
