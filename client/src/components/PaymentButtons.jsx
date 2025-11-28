@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { getCartItems } from "../../redux/appSlice";
 import styles from "../../styles/cart/cart.module.css";
 
-const API = "https://ecommerce-backend.onrender.com";
+const API = "https://e-commerce-backend-6y04.onrender.com";
 
 const PaymentButtons = () => {
   const cartItems = useSelector(getCartItems);

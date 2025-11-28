@@ -22,11 +22,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
-<<<<<<< HEAD:client/package.json
-    "proxy": "http://localhost:3000"
-=======
+    "proxy": "http://localhost:3000",
     "stripe": "^20.0.0"
->>>>>>> tmp:package.json
   },
   "scripts": {
     "start": "react-scripts start",
