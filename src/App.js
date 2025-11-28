@@ -2,10 +2,9 @@ import React from "react"
 import Navigation from "./components/navigation/Navigation"
 import Products from "./pages/Products"
 import {BrowserRouter, Route, Routes} from "react-router-dom"
-
-import StripeCancel from "./pages/stripe/StripeCancel"
-import StripeSuccess from "./pages/stripe/StripeSuccess"
 import NotFound from "./pages/NotFound"
+import SuccessPage from "./pages/SuccessPage"
+import CancelPage from "./pages/CancelPage"
 import ProductPage from "./pages/ProductPage"
 import Login from "./pages/auth/Login"
 import SignUp from "./pages/auth/SignUp"
@@ -24,8 +23,8 @@ function App() {
           <Route path="user-cabinet" element={<UserCabinet/>}/>
           <Route path="products" element={<Products/>}/>
           <Route path="products/:id" element={<ProductPage/>}/>
-          <Route path="stripe-cancel" element={<StripeCancel/>}/>
-          <Route path="stripe-success" element={<StripeSuccess/>}/>
+          <Route path="/success" element={<SuccessPage/>} />
+          <Route path="/cancel" element={<CancelPage/>} /> 
         </Routes>
       </BrowserRouter>
     </>

@@ -1,80 +1,60 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import { useSelector, useDispatch } from "react-redux";
-import { getCartItems, setShowRedirect } from "../../redux/appSlice";
+import { useSelector } from "react-redux";
+import { getCartItems } from "../../redux/appSlice";
+import styles from "../../styles/cart/cart.module.css";
 
-export default function PaymentButtons() {
+const API = "http://localhost:5000";
+
+const PaymentButtons = () => {
   const cartItems = useSelector(getCartItems);
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState({ stripe: false, paypal: false });
 
   const handlePayment = async (provider) => {
-    setLoading(provider);
-    dispatch(setShowRedirect(true));
-
+    setLoading((prev) => ({ ...prev, [provider]: true }));
     try {
-      let endpoint = "";
-      switch (provider) {
-        case "stripe":
-          endpoint = process.env.REACT_APP_BACKEND_URL + "/pay/stripe";
-          break;
-        case "paypal":
-          endpoint = process.env.REACT_APP_BACKEND_URL + "/pay/paypal";
-          break;
-        case "liqpay":
-          endpoint = process.env.REACT_APP_BACKEND_URL + "/pay/liqpay";
-          break;
-        case "fondy":
-          endpoint = process.env.REACT_APP_BACKEND_URL + "/pay/fondy";
-          break;
-        case "wayforpay":
-          endpoint = process.env.REACT_APP_BACKEND_URL + "/pay/wayforpay";
-          break;
-        default:
-          break;
-      }
-
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${API}/pay/${provider}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cartItems)
+        body: JSON.stringify(cartItems),
       });
 
-      if (provider === "stripe" || provider === "paypal") {
-        const { url } = await res.json();
-        window.location.href = url;
-      } else {
-        // LiqPay/Fondy/WayForPay повертають HTML форми
-        const formHtml = await res.text();
-        const container = document.createElement("div");
-        container.innerHTML = formHtml;
-        document.body.appendChild(container);
-        const form = container.querySelector("form");
-        form.submit();
-      }
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
     } catch (err) {
-      console.error(provider, err);
-      setLoading("");
+      console.error("Payment error:", err);
+      alert("Payment failed");
+    } finally {
+      setLoading((prev) => ({ ...prev, [provider]: false }));
     }
   };
 
   return (
-    <div className="d-flex flex-column gap-2">
-      <Button variant="success" onClick={() => handlePayment("stripe")} disabled={loading}>
-        {loading === "stripe" ? "Redirecting..." : "Pay with Stripe"}
-      </Button>
-      <Button variant="primary" onClick={() => handlePayment("paypal")} disabled={loading}>
-        {loading === "paypal" ? "Redirecting..." : "Pay with PayPal"}
-      </Button>
-      <Button variant="warning" onClick={() => handlePayment("liqpay")} disabled={loading}>
-        {loading === "liqpay" ? "Redirecting..." : "Pay with LiqPay"}
-      </Button>
-      <Button variant="info" onClick={() => handlePayment("fondy")} disabled={loading}>
-        {loading === "fondy" ? "Redirecting..." : "Pay with Fondy"}
-      </Button>
-      <Button variant="secondary" onClick={() => handlePayment("wayforpay")} disabled={loading}>
-        {loading === "wayforpay" ? "Redirecting..." : "Pay with WayForPay"}
-      </Button>
+    <div className={styles.buttonContainer}>
+      <button
+        className={styles.btnStripe}
+        onClick={() => handlePayment("stripe")}
+        disabled={loading.stripe}
+      >
+        {loading.stripe ? (
+          <span className={styles.loader}></span>
+        ) : (
+          "Pay with Stripe"
+        )}
+      </button>
+
+      <button
+        className={styles.btnPaypal}
+        onClick={() => handlePayment("paypal")}
+        disabled={loading.paypal}
+      >
+        {loading.paypal ? (
+          <span className={styles.loader}></span>
+        ) : (
+          "Pay with PayPal"
+        )}
+      </button>
     </div>
   );
-}
+};
+
+export default PaymentButtons;
