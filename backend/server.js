@@ -1,13 +1,12 @@
 import express from "express";
 import cors from "cors";
-import crypto from "crypto";
 import dotenv from "dotenv";
 import Stripe from "stripe";
 import paypal from "@paypal/checkout-server-sdk";
 
 dotenv.config();
 const app = express();
-const allowedOrigins = ["http://localhost:3000", "https://e-commerce-demo-fivi.onrender.com"];
+const allowedOrigins = ["*"];
 
 app.use(cors({
   origin: function(origin, callback) {
