@@ -6,7 +6,10 @@ import paypal from "@paypal/checkout-server-sdk";
 
 dotenv.config();
 const app = express();
-const allowedOrigins = ["*"];
+const allowedOrigins = [
+  "https://e-commerce-client-305h.onrender.com",
+  "http://localhost:3000",
+];
 
 app.use(cors({
   origin: function(origin, callback) {
