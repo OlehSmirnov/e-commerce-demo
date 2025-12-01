@@ -44,7 +44,7 @@ app.post("/pay/stripe", async (req, res) => {
       mode: "payment",
       line_items: lineItems,
       success_url: process.env.SUCCESS_URL,
-      cancel_url: process.env.CANCEL_URL,
+      cancel_url: process.env.CANCEL_URL
     });
     res.json({ url: session.url });
   } catch (err) {
@@ -74,7 +74,7 @@ app.post("/pay/paypal", async (req, res) => {
     }],
     application_context: {
       return_url: process.env.SUCCESS_URL,
-      cancel_url: "http://localhost:3000/cancel"
+      cancel_url: process.env.CANCEL_URL
     }
   });
 
