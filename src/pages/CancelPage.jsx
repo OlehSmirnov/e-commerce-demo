@@ -7,7 +7,7 @@ const CancelPage = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Payment Cancelled</h2>
+      <h2>Оплату скасовано!</h2>
       <p>Оплата не була завершена. Можете спробувати ще раз.</p>
       <Button variant="primary" onClick={() => navigate("/")}>
         Повернутися до магазину

@@ -7,7 +7,7 @@ const SuccessPage = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Payment Successful!</h2>
+      <h2>Оплата успішна!</h2>
       <p>Дякуємо за покупку.</p>
       <Button variant="primary" onClick={() => navigate("/")}>
         Повернутися до магазину
