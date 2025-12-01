@@ -39,13 +39,19 @@ app.post("/pay/stripe", async (req, res) => {
       },
       quantity: item.count || 1,
     }));
+
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "link", "google_pay", "apple_pay"], // ось тут магія
       mode: "payment",
       line_items: lineItems,
-      success_url: process.env.SUCCESS_URL,
-      cancel_url: process.env.CANCEL_URL
+      success_url: process.env.SUCCESS_URL + "?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: process.env.CANCEL_URL,
+      // Додатково для Google Pay в Checkout
+      payment_intent_data: {
+        setup_future_usage: "off_session" // якщо плануєш зберігати картки
+      }
     });
+
     res.json({ url: session.url });
   } catch (err) {
     console.error("Stripe error:", err);
