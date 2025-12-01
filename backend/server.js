@@ -31,30 +31,45 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 app.post("/pay/stripe", async (req, res) => {
   try {
     const items = req.body || [];
-    const lineItems = items.map(item => ({
-      price_data: {
-        currency: "usd",
-        product_data: { name: item.name || "Product" },
-        unit_amount: Math.round((item.price || 0) * 100),
-      },
-      quantity: item.count || 1,
-    }));
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "Кошик порожній" });
+    }
+
+    const lineItems = items.map((item, i) => {
+      // Безпечна назва — навіть якщо name/title взагалі немає
+      const name = item.name || item.title || item.productName || `Товар ${i + 1}`;
+      const price = parseFloat(item.price);
+      const quantity = parseInt(item.count || item.quantity || 1, 10) || 1;
+
+      if (!price || price <= 0) {
+        throw new Error(`Невірна ціна в товарі: ${JSON.stringify(item)}`);
+      }
+
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: name.trim() || `Товар ${i + 1}`,
+          },
+          unit_amount: Math.round(price * 100),
+        },
+        quantity,
+      };
+    });
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card", "link", "google_pay", "apple_pay"],
+      payment_method_types: ["card", "google_pay", "apple_pay"],
       mode: "payment",
       line_items: lineItems,
-      success_url: process.env.SUCCESS_URL + "?session_id={CHECKOUT_SESSION_ID}",
+      success_url: process.env.SUCCESS_URL,
       cancel_url: process.env.CANCEL_URL,
-      payment_intent_data: {
-        setup_future_usage: "off_session"
-      }
     });
 
     res.json({ url: session.url });
   } catch (err) {
-    console.error("Stripe error:", err);
-    res.status(500).json({ error: "Stripe failed", message: err.message });
+    console.error("Stripe error:", err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
