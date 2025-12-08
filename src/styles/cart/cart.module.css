@@ -129,6 +129,67 @@ input {
 }
 
 .btnStripe,
-.btnPaypal {
-  min-width: 180px; 
+.btnPaypal,
+.btnWayForPay {
+  min-width: 50px; 
+}
+
+/* WayForPay button: styled similarly to Stripe/PayPal for visual consistency */
+.btnWayForPay {
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  background-color: #ff8a00; /* warm orange to distinguish from Stripe/PayPal */
+}
+
+.btnWayForPay:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btnWayForPay:active {
+  transform: scale(0.95);
+}
+
+.btnWayForPay:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Crypto button (e.g., Coinbase) - visual sibling of Stripe/PayPal */
+.btnCrypto {
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  background: linear-gradient(90deg, #00b894 0%, #00cec9 100%);
+}
+
+.btnCrypto:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+}
+
+.btnCrypto:active {
+  transform: scale(0.95);
+}
+
+.btnCrypto:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

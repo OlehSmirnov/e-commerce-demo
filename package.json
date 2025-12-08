@@ -7,6 +7,7 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@reduxjs/toolkit": "^1.8.1",
+    "@revolut/checkout": "^1.1.23",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
