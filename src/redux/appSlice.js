@@ -8,7 +8,8 @@ export const appSlice = createSlice({
     cartItems: JSON.parse(localStorage.getItem(CART)) || [],
     favorites: null,
     showCart: false,
-    showRedirect: false
+    showRedirect: false,
+    payments: null
   },
   reducers: {
     addCartItem: (state, action) => {
@@ -39,15 +40,19 @@ export const appSlice = createSlice({
     },
     setFavorites: (state, action) => {
       state.favorites = action.payload
+    },
+    setPayments: (state, action) => {
+      state.payments = action.payload
     }
   }
 })
 
-export const {addCartItem, setShowCart, updateItem, setShowRedirect, setFavorites} = appSlice.actions
+export const {addCartItem, setShowCart, updateItem, setShowRedirect, setFavorites, setPayments} = appSlice.actions
 
 export const getShowCart = (state) => state.app.showCart
 export const getCartItems = (state) => state.app.cartItems
 export const getShowRedirect = (state) => state.app.showRedirect
 export const getFavorites = (state) => state.app.favorites
+export const getPayments = (state) => state.app.payments
 
 export default appSlice.reducer

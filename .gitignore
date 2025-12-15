@@ -12,6 +12,7 @@
 /build
 /server
 .env
+/backend/payment_performance.db
 
 # misc
 .DS_Store

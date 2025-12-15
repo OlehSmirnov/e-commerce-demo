@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setShowCart, getShowCart, getCartItems, getShowRedirect } from "../../redux/appSlice";
 import styles from "../../styles/cart/cart.module.css";
 import CartItems from "./CartItems";
-import PaymentButtons from "../payments/PaymentButtons"; // <- новий компонент
+import PaymentMethodSelector from "../payments/PaymentMethodSelector"; // <- новий компонент
 import { Alert, Spinner } from "react-bootstrap";
 import { CART } from "../../constants";
 
@@ -54,7 +54,7 @@ const Cart = () => {
         {cartItems.length > 0 && (
           <Modal.Footer className={styles.modal_footer}>
             <Card.Title>Total: ${countTotal()}</Card.Title>
-            <PaymentButtons />
+            <PaymentMethodSelector />
           </Modal.Footer>
         )}
       </Modal>

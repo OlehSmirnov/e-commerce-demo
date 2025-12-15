@@ -14,7 +14,7 @@ const Favorites = () => {
       {favorites
         ?
         <>
-          <h3>Your favorites list:</h3>
+          <h3>Список обраних товарів:</h3>
           <Row xs={2} sm={3} lg={5} className="row g-0">
             {favorites.map(product => {
               return <ProductCard
@@ -29,7 +29,7 @@ const Favorites = () => {
           </Row>
         </>
         :
-        <h3>Your favorites list is empty!</h3>
+        <h3>Список обраних товарів пустий!</h3>
       }
     </>
   )
