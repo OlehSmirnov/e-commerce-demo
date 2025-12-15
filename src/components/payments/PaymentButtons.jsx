@@ -1,79 +1,132 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getCartItems } from "../../redux/appSlice";
+import { firestore } from "../../firebase/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 import styles from "../../styles/cart/cart.module.css";
 
-// Для локального тестування
-//const API = "http://localhost:5000";
-
- const API = "https://e-commerce-backend-6y04.onrender.com";
+const API = "http://localhost:5000";
 
 const PaymentButtons = () => {
   const cartItems = useSelector(getCartItems);
 
-  // Стан loading для всіх платіжок
+  const [methods, setMethods] = useState(null);
   const [loading, setLoading] = useState({
     stripe: false,
     paypal: false,
     wayforpay: false,
   });
 
+  useEffect(() => {
+    const loadMethods = async () => {
+      const snap = await getDocs(collection(firestore, "payment_methods"));
+      const data = {};
+      snap.forEach((doc) => {
+        data[doc.id.toLowerCase()] = doc.data().enabled;
+      });
+      setMethods(data);
+    };
+
+    loadMethods();
+  }, []);
+
+  useEffect(() => {
+  if (!methods) return;
+
+  const t1 = performance.now();
+  const t0 = sessionStorage.getItem("provider_switch_t0");
+  const provider = sessionStorage.getItem("provider_switch_name");
+
+  if (t0 && provider) {
+    const duration = t1 - Number(t0);
+
+    console.log(
+      `[SWITCH PERFORMANCE] ${provider}: ${duration.toFixed(2)} ms`
+    );
+
+    sessionStorage.removeItem("provider_switch_t0");
+    sessionStorage.removeItem("provider_switch_name");
+  }
+}, [methods]);
+
+  if (!methods) return <p>Loading payment options...</p>;
+
   const handlePayment = async (provider) => {
-    if (provider === 'wayforpay') {
+    // Генеруємо унікальний ID і фіксуємо час початку
+    const paymentId = crypto.randomUUID();
+    const startTime = Date.now();
+
+    // Зберігаємо в localStorage — success-сторінка прочитає
+    localStorage.setItem(
+      "pending_payment",
+      JSON.stringify({
+        provider,
+        paymentId,
+        startTime,
+      })
+    );
+
+    if (provider === "wayforpay") {
+      // WayForPay — твій робочий код без змін
       setLoading((prev) => ({ ...prev, wayforpay: true }));
       try {
         const resp = await fetch(`${API}/pay/wayforpay`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: cartItems })
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: cartItems }),
         });
-        if (!resp.ok) {
-          const body = await resp.text();
-          throw new Error(body || `HTTP ${resp.status}`);
-        }
+
+        if (!resp.ok) throw new Error(await resp.text());
+
         const params = await resp.json();
 
-        // Load WayForPay widget script if not loaded
         if (!window.Wayforpay) {
           await new Promise((resolve, reject) => {
-            const s = document.createElement('script');
-            s.src = 'https://secure.wayforpay.com/server/pay-widget.js';
+            const s = document.createElement("script");
+            s.src = "https://secure.wayforpay.com/server/pay-widget.js";
             s.onload = resolve;
-            s.onerror = () => reject(new Error('Failed to load WayForPay widget'));
+            s.onerror = reject;
             document.head.appendChild(s);
           });
         }
 
-        try {
-          const wayforpay = new window.Wayforpay();
-          wayforpay.run(
-            params,
-            function onApproved(response) {
-              // Redirect to frontend success page with orderReference
-              const ref = params.orderReference;
-              window.location.href = window.location.origin + '/success' + (ref ? `?orderReference=${encodeURIComponent(ref)}` : '');
-            },
-            function onDeclined(response) {
-              alert('Оплата відхилена');
-            },
-            function onPending(response) {
-              alert('Оплата в обробці');
+        const wayforpay = new window.Wayforpay();
+        wayforpay.run(
+          params,
+          async function onApproved(response) {
+            const endTime = Date.now();
+            const clientData = JSON.parse(params.clientData || "{}");
+            const startTime = clientData.startTime || Date.now();
+
+            try {
+              await fetch(`${API}/payment-success`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  provider: "wayforpay",
+                  paymentId: params.orderReference,
+                  startTime: startTime,
+                  endTime: endTime,
+                }),
+              });
+            } catch (err) {
+              console.error("Не вдалося надіслати час оплати", err);
             }
-          );
-        } catch (err) {
-          console.error('Wayforpay widget error', err);
-          alert('Не вдалося запустити WayForPay віджет: ' + (err.message || err));
-        }
+
+            window.location.href = window.location.origin;
+          }
+        );
       } catch (err) {
-        console.error('WayForPay error', err);
-        alert('Помилка WayForPay: ' + (err.message || err));
+        alert("Помилка WayForPay: " + err.message);
+        localStorage.removeItem("pending_payment");
       } finally {
         setLoading((prev) => ({ ...prev, wayforpay: false }));
       }
       return;
     }
 
+    // Stripe і PayPal — просто редирект, без змін URL
     setLoading((prev) => ({ ...prev, [provider]: true }));
 
     try {
@@ -84,72 +137,54 @@ const PaymentButtons = () => {
       });
 
       if (!res.ok) {
-        let errorBody;
-        try {
-          errorBody = await res.json();
-        } catch (parseErr) {
-          // fallback to text if not json
-          errorBody = await res.text();
-        }
-
-        console.error(`${provider} API error`, res.status, errorBody);
-
-        // Prefer a human message if present, otherwise stringify details
-        let message = `HTTP ${res.status}`;
-        if (errorBody) {
-          if (typeof errorBody === "string") message = errorBody;
-          else if (errorBody.error) message = typeof errorBody.error === "string" ? errorBody.error : JSON.stringify(errorBody.error);
-          else if (errorBody.message) message = typeof errorBody.message === "string" ? errorBody.message : JSON.stringify(errorBody.message);
-          else message = JSON.stringify(errorBody);
-        }
-
-        alert(`Помилка ${provider}: ${message}`);
-        setLoading((prev) => ({ ...prev, [provider]: false }));
+        const errorBody = await res.text();
+        alert(`Помилка ${provider}: ${errorBody}`);
+        localStorage.removeItem("pending_payment");
         return;
       }
 
       const data = await res.json();
 
       if (data.url) {
-        window.location.href = data.url;
+        window.location.href = data.url; // ← без жодних додавань!
       }
     } catch (err) {
-      console.error(`${provider} error:`, err);
-      // Show useful info to the user
-      const info = err && err.message ? err.message : JSON.stringify(err);
-      alert(`Помилка ${provider}: ${info}`);
+      alert(`Помилка ${provider}: ${err.message}`);
+      localStorage.removeItem("pending_payment");
     } finally {
       setLoading((prev) => ({ ...prev, [provider]: false }));
     }
   };
 
-  const total = cartItems.reduce((sum, i) => sum + (i.price * (i.count || 1)), 0);
-
   return (
-    <div className={styles.buttonContainer}>
-      <button
-        className={styles.btnStripe}
-        onClick={() => handlePayment("stripe")}
-        disabled={loading.stripe}
-      >
-        {loading.stripe ? <span className={styles.loader}></span> : "Pay with Stripe"}
-      </button>
-
-      <button
-        className={styles.btnPaypal}
-        onClick={() => handlePayment("paypal")}
-        disabled={loading.paypal}
-      >
-        {loading.paypal ? <span className={styles.loader}></span> : "Pay with PayPal"}
-      </button>
-
-      <button
-        className={styles.btnWayForPay}
-        onClick={() => handlePayment("wayforpay")}
-        disabled={loading.wayforpay}
-      >
-        {loading.wayforpay ? <span className={styles.loader}></span> : "Pay with WayForPay"}
-      </button>
+    <div className={styles.paymentButtonsContainer}>
+      {methods.stripe && (
+        <button
+          className={styles.btnStripe}
+          disabled={loading.stripe}
+          onClick={() => handlePayment("stripe")}
+        >
+          {loading.stripe ? "Loading..." : "Оплатити через Stripe"}
+        </button>
+      )}
+      {methods.paypal && (
+        <button
+          className={styles.btnPaypal}
+          disabled={loading.paypal}
+          onClick={() => handlePayment("paypal")}
+        >
+          {loading.paypal ? "Loading..." : "Оплатити через PayPal"}
+        </button>
+      )}
+      {methods.wayforpay && (
+        <button
+          className={styles.btnWayForPay}
+          disabled={loading.wayforpay}
+          onClick={() => handlePayment("wayforpay")}
+        >
+          {loading.wayforpay ? "Loading..." : "Оплатити через WayForPay"}
+        </button>
+      )}
     </div>
   );
 };
