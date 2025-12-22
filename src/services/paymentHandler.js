@@ -1,6 +1,5 @@
 /**
  * Unified payment handler for all providers
- * Handles WayForPay widget, Stripe, PayPal, Fondy, Coinbase, etc.
  */
 import { parseApiError, logError, getErrorMessage } from "./errorService";
 
@@ -24,7 +23,6 @@ export const handlePayment = async (provider, cartItems, apiUrl, setLoading, onE
       const response = await resp.json();
       const params = response.data || response;
 
-      // Load WayForPay widget script if not loaded
       if (!window.Wayforpay) {
         await new Promise((resolve, reject) => {
           const s = document.createElement('script');
@@ -64,7 +62,7 @@ export const handlePayment = async (provider, cartItems, apiUrl, setLoading, onE
     return;
   }
 
-  // Stripe, PayPal, Coinbase, Fondy, etc. — redirect payment handler
+  // redirect payment handler
   setLoading((prev) => ({ ...prev, [provider]: true }));
 
   try {
