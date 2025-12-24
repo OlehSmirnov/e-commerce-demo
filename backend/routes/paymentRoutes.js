@@ -6,8 +6,15 @@ import express from "express";
 import crypto from "crypto";
 import Stripe from "stripe";
 import paypal from "@paypal/checkout-server-sdk";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import { logPayment } from "../config/db.js";
 import { ApiError } from "../services/errorHandler.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 const router = express.Router();
 
