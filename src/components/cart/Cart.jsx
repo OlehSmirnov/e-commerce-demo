@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setShowCart, getShowCart, getCartItems, getShowRedirect } from "../../redux/appSlice";
 import styles from "../../styles/cart/cart.module.css";
 import CartItems from "./CartItems";
-import PaymentMethodSelector from "../payments/PaymentMethodSelector"; // <- новий компонент
+import PaymentMethodSelector from "../payments/PaymentMethodSelector";
 import { Alert, Spinner } from "react-bootstrap";
 import { CART } from "../../constants";
 

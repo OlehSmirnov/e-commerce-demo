@@ -8,10 +8,9 @@ import { collection, getDocs } from "firebase/firestore";
 
 import styles from "../../styles/cart/cart.module.css";
 
-// Для локального тестування
 const API = "http://localhost:5000";
 
-// const API = "https://твій-бекенд.onrender.com";
+// const API = "https:/onrender.com";
 
 const PaymentMethodSelector = () => {
   const cartItems = useSelector(getCartItems);

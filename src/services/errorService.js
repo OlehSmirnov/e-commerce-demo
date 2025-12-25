@@ -1,7 +1,3 @@
-/**
- * Centralized error service for consistent error handling
- */
-
 export class PaymentError extends Error {
   constructor(message, code = "UNKNOWN_ERROR", details = null) {
     super(message);

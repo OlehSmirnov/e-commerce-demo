@@ -18,7 +18,6 @@ dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 const router = express.Router();
 
-// ===== PROVIDER INITIALIZATION =====
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const paypalClient = new paypal.core.PayPalHttpClient(

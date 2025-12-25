@@ -15,9 +15,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-// ---------------------------
-//  INIT APP
-// ---------------------------
 const app = initializeApp({
   apiKey: "AIzaSyAUFISPevQnKOdy9ziYywDPi3HkKQVPqs8",
   authDomain: "oleh-e-commerce.firebaseapp.com",
@@ -32,7 +29,6 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 
-// Отримати всі payment methods
 const getPaymentMethods = async () => {
   const colRef = collection(firestore, "payment_methods");
   const snapshot = await getDocs(colRef);
@@ -45,15 +41,11 @@ const getPaymentMethods = async () => {
   return methods;
 };
 
-// Увімкнення/вимкнення обраного методу оплати
 const setPaymentMethod = async (name, enabled) => {
   const docRef = doc(firestore, "payment_methods", name);
   await updateDoc(docRef, { enabled });
 };
 
-// ---------------------------
-//  AUTH HELPERS
-// ---------------------------
 const signUpUser = (userData) => {
   return createUserWithEmailAndPassword(auth, userData.email, userData.password)
     .then((userCredential) => userCredential.user)
@@ -84,9 +76,6 @@ const loginUser = (userData) => {
 
 const signOutUser = () => signOut(auth);
 
-// ---------------------------
-//  FAVORITES
-// ---------------------------
 const updateFavorites = (favorites) => {
   const data = {
     email: auth.currentUser.email,
@@ -99,9 +88,6 @@ const updateFavorites = (favorites) => {
   return update(ref(database), updates);
 };
 
-// ---------------------------
-//  EXPORTS
-// ---------------------------
 export default auth;
 
 export {
