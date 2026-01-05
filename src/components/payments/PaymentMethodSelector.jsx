@@ -10,7 +10,7 @@ import styles from "../../styles/cart/cart.module.css";
 
 //const API = "http://localhost:5000";
 
-const API = "https://e-commerce-client-305h.onrender.com/";
+const API = "https://e-commerce-backend-6y04.onrender.com";
 
 const PaymentMethodSelector = () => {
   const cartItems = useSelector(getCartItems);
