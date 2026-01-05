@@ -8,9 +8,9 @@ import { collection, getDocs } from "firebase/firestore";
 
 import styles from "../../styles/cart/cart.module.css";
 
-const API = "http://localhost:5000";
+//const API = "http://localhost:5000";
 
-// const API = "https:/onrender.com";
+const API = "https://e-commerce-client-305h.onrender.com/";
 
 const PaymentMethodSelector = () => {
   const cartItems = useSelector(getCartItems);
